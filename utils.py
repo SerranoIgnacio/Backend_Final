@@ -9,6 +9,7 @@ Descripcion:
 En este programa se encuentran un graficador
 '''
 
+from cProfile import label
 import io
 import base64
 
@@ -27,7 +28,13 @@ def graficar(x, y):
     '''
     fig, ax = plt.subplots(figsize=(16, 9))
     ax.bar(x, y)
-    ax.get_xaxis().set_visible(False)
+    ax.get_xaxis().set_visible(True)
+    ax.set_facecolor('whitesmoke')
+    ax.set_title("Turnos por Edad")
+    ax.set_ylabel("Cantidad")
+  #  ax.set_yticks(y)
+    ax.set_xlabel("Edades")
+ #   ax.set_xticks(x)
 
     image_html = io.BytesIO()
     FigureCanvas(fig).print_png(image_html)

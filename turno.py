@@ -8,7 +8,7 @@ Version: 1.0
 Descripcion:
 Programa creado para administrar la base de datos de registro de Turnos
 '''
-
+import collections
 from datetime import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -47,13 +47,13 @@ def report(limit=0, offset=0):
     return json_result_list
     
 def dashboard():
+    
     query = db.session.query(Turno)
-    n=0
-    x = []
-    y = []
-    for person in query:
-        y.append(person.age)
-        x.append(person.id)
+
+    edades = collections.Counter(persona.age for persona in query)
+    x = edades.keys()
+    y = edades.values()
+
     return x, y
 
 if __name__ == "__main__":
@@ -66,3 +66,4 @@ if __name__ == "__main__":
     db.create_all()
     db.session.remove()
     db.drop_all()
+    dashboard()

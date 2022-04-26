@@ -2,11 +2,11 @@
 '''
 Heart DB manager
 ---------------------------
-Autor: Inove Coding School
-Version: 2.0
+Autor: Ignacio Serrano
+Version: 1.0
 
 Descripcion:
-Programa creado para administrar la base de datos de registro de personas
+Programa creado para administrar la base de datos de registro de Turnos
 '''
 
 from datetime import datetime
@@ -14,8 +14,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
-class Persona(db.Model):
-    __tablename__ = "persona"
+class Turno(db.Model):
+    __tablename__ = "turno"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     age = db.Column(db.Integer)
@@ -23,21 +23,16 @@ class Persona(db.Model):
     date = db.Column(db.DateTime)
        
     def __repr__(self):
-        return f"Persona:{self.name} con turno {self.date}"
-
+        return f"Nombre:{self.name} con turno el dia {self.date}"
 
 def insert(name, age, phone, date):
-    # Crear una nueva persona
-    person = Persona(name=name, age=age, phone=phone, date=date)
-
-    # Agregar la persona a la DB
+    person = Turno(name=name, age=age, phone=phone, date=date)
     db.session.add(person)
     db.session.commit()
 
 
 def report(limit=0, offset=0):
-    # Obtener todas las personas
-    query = db.session.query(Persona)
+    query = db.session.query(Turno)
     if limit > 0:
         query = query.limit(limit)
         if offset > 0:
@@ -45,10 +40,6 @@ def report(limit=0, offset=0):
 
     json_result_list = []
 
-    # De los resultados obtenidos pasar a un diccionario
-    # que luego será enviado como JSON
-    # TIP --> la clase Persona podría tener una función
-    # para pasar a JSON/diccionario
     for person in query:
         json_result = {'name': person.name, 'age': person.age, 'phone': person.phone, 'date': person.date}
         json_result_list.append(json_result)
@@ -56,7 +47,7 @@ def report(limit=0, offset=0):
     return json_result_list
     
 def dashboard():
-    query = db.session.query(Persona)
+    query = db.session.query(Turno)
     x = []
     y = []
     for person in query:
@@ -67,22 +58,11 @@ def dashboard():
 
 if __name__ == "__main__":
     print("Test del modulo heart.py")
-
-    # Crear una aplicación Flask para testing
-    # y una base de datos fantasma (auxiliar o dummy)
-    # Referencia:
-    # https://stackoverflow.com/questions/17791571/how-can-i-test-a-flask-application-which-uses-sqlalchemy
     app = Flask(__name__)
     app.config['TESTING'] = True
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///testdatabase.db"
-    # Bindear la DB con nuestra app Flask
     db.init_app(app)
     app.app_context().push()
-
     db.create_all()
-
-    # Aquí se puede ensayar todo lo que necesitemos con nuestra DB
-    # ...
-
     db.session.remove()
     db.drop_all()

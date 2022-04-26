@@ -3,11 +3,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <body>
     <h1>Sistema Gestion de Turnos</h1>
-    <h2>Endpoints disponibles:</h2>
     <h2>Consulta Turnos</h2>
-    <h3>[GET] /personas?limit=[]&offset=[] --> renderizar con table.html el listado de personas</h3>
-    <form action="{{url_for('personas')}}">
-        <input class="btn btn-outline-success" type="submit" value="Personas"/>
+    <h3>[GET] /turnos?limit=[]&offset=[] --> renderizar con table.html el listado de Turnos</h3>
+    <form action="{{url_for('turnos')}}">
+        <input class="btn btn-outline-success" type="submit" value="Turnos"/>
     </form>
     <p></p>
     <h2>Administracion Turnos</h2>
@@ -17,7 +16,7 @@
     </form>
     <p></p>
     <h2>Grafica de turnos.</h2>
-    <h3>[GET] /comparativa --> mostrar un gráfico con las edades de todas las personas
+    <h3>[GET] /comparativa --> mostrar un gráfico con las edades de todas las Turnos
     <form action="{{url_for('comparativa')}}">
         <input class="btn btn-outline-success" type="submit" value="comparativa"/>
     </form>

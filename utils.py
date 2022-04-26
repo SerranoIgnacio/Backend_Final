@@ -2,12 +2,11 @@
 '''
 Archivo con utilidades para la app
 ---------------------------
-Autor: Inove Coding School
-Version: 2.0
+Autor: Ignacio Serrano
+Version: 1.0
 
 Descripcion:
-En este programa se encuentran distitas herramientas
-de ayuda para utilizar en la aplicación
+En este programa se encuentran un graficador
 '''
 
 import io
@@ -30,9 +29,7 @@ def graficar(x, y):
     ax.plot(x, y)
     ax.get_xaxis().set_visible(False)
 
-    # Convertir ese grafico en una imagen para enviar por HTTP
-    # y mostrar en el HTML
     image_html = io.BytesIO()
     FigureCanvas(fig).print_png(image_html)
-    plt.close(fig)  # Cerramos la imagen para que no consuma memoria del sistema
+    plt.close(fig) 
     return image_html

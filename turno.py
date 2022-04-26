@@ -48,12 +48,12 @@ def report(limit=0, offset=0):
     
 def dashboard():
     query = db.session.query(Turno)
+    n=0
     x = []
     y = []
     for person in query:
-        x.append(person.name)
         y.append(person.age)
-
+        x.append(person.id)
     return x, y
 
 if __name__ == "__main__":
